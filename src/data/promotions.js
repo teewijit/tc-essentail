@@ -1,0 +1,60 @@
+export const mockHomePromotions = [
+  {
+    id: 'weekly-heavy-discount',
+    title: { th: 'โปรแรงประจำสัปดาห์', en: 'Weekly Fabric Deals' },
+    subtitle: {
+      th: 'ผ้าที่ราคาดี คัดโดยทีม Tee Culture',
+      en: 'Curated limited-time fabric deals',
+    },
+    placement: 'home_featured_deals',
+    isActive: true,
+    startsAt: '2026-07-01T00:00:00+07:00',
+    endsAt: '2026-07-31T23:59:59+07:00',
+    priority: 10,
+    items: [
+      {
+        fabricId: 'tc-2401',
+        promoPrice: 100,
+        compareAtPrice: 132,
+        badgeLabel: { th: 'ลดหนัก', en: 'Hot Deal' },
+        displayOrder: 1,
+        isHero: true,
+      },
+      {
+        fabricId: 'tk-3308',
+        promoPrice: 80,
+        compareAtPrice: 118,
+        badgeLabel: { th: 'ลดหนัก', en: 'Hot Deal' },
+        displayOrder: 2,
+      },
+      {
+        fabricId: 'cvc-5502',
+        promoPrice: 120,
+        compareAtPrice: 156,
+        badgeLabel: { th: 'ลดหนัก', en: 'Hot Deal' },
+        displayOrder: 3,
+      },
+      {
+        fabricId: 'ct-2090',
+        promoPrice: 110,
+        compareAtPrice: 152,
+        badgeLabel: { th: 'ลดหนัก', en: 'Hot Deal' },
+        displayOrder: 4,
+      },
+      {
+        fabricId: 'tc-5520',
+        promoPrice: 100,
+        compareAtPrice: 129,
+        badgeLabel: { th: 'ลดหนัก', en: 'Hot Deal' },
+        displayOrder: 5,
+      },
+      {
+        fabricId: 'cvc-6010',
+        promoPrice: 115,
+        compareAtPrice: 148,
+        badgeLabel: { th: 'ลดหนัก', en: 'Hot Deal' },
+        displayOrder: 6,
+      },
+    ],
+  },
+]
