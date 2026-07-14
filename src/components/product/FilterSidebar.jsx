@@ -9,7 +9,36 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 import { useLanguage } from '../../i18n/useLanguage'
 
 const filterGroups = [
-  { titleKey: 'filters.fabricType', columns: true, items: [['Single Jersey', 120], ['Interlock', 48], ['Rib', 36], ['French Terry', 42], ['Pique', 24]] },
+  {
+    title: { th: 'หมวดหมู่', en: 'CATEGORY' },
+    filterKey: 'category',
+    columns: true,
+    items: [
+      ['Dress'],
+      ['Jacket/Hoody'],
+      ['Pants'],
+      ['Polo'],
+      ['Streetwear'],
+      ['T-Shirt'],
+      ['Underwear'],
+      ['Crop/Baby-Tee'],
+      ['Shirt'],
+      ['Accessory'],
+    ],
+  },
+  {
+    titleKey: 'filters.fabricType',
+    filterKey: 'fabric_type',
+    multi: true,
+    columns: true,
+    items: [
+      ['Single Jersey', 120, 'single_jersey'],
+      ['Interlock', 48, 'interlock'],
+      ['Rib', 36, 'rib'],
+      ['French Terry', 42, 'french_terry'],
+      ['Pique', 24, 'pique'],
+    ],
+  },
   { titleKey: 'filters.composition', columns: true, items: [['100% Cotton', 86], ['Cotton Polyester', 92], ['100% Polyester', 28], ['Cotton Spandex', 34], ['Polyester Spandex', 18]] },
   { titleKey: 'filters.width', items: [['60" (152 cm)', 88], ['72" (183 cm)', 94], ['80" (203 cm)', 26]] },
   { titleKey: 'filters.stockStatus', columns: true, items: [['In Stock', 186], ['Low Stock', 32], ['Pre-Order', 18]] },
@@ -30,9 +59,19 @@ const colorSwatches = [
   ['Black', '#000000'],
 ]
 
-export function FilterSidebar({ setFilters }) {
+const emptyFilters = {
+  type: 'All',
+  fabric_type: 'All',
+  category: 'All',
+  color: 'All',
+  gsm: 'All',
+  width: 'All',
+  usage: 'All',
+}
+
+export function FilterSidebar({ filters, setFilters }) {
   const { t } = useLanguage()
-  const resetFilters = () => setFilters({ type: 'All', color: 'All', gsm: 'All', width: 'All', usage: 'All' })
+  const resetFilters = () => setFilters(emptyFilters)
 
   return (
     <Card className="h-fit gap-0 rounded-lg p-0 text-sm shadow-sm">
@@ -50,12 +89,13 @@ export function FilterSidebar({ setFilters }) {
         </CardHeader>
 
         <CardContent className="p-4 pt-0">
-          <CheckGroup group={filterGroups[0]} />
-          <CheckGroup group={filterGroups[1]} />
+          <CheckGroup group={filterGroups[0]} filters={filters} setFilters={setFilters} />
+          <CheckGroup group={filterGroups[1]} filters={filters} setFilters={setFilters} />
+          <CheckGroup group={filterGroups[2]} filters={filters} setFilters={setFilters} />
           <RangeGroup title={t('filters.gsm')} min={100} max={300} unit="GSM" />
-          <CheckGroup group={filterGroups[2]} />
+          <CheckGroup group={filterGroups[3]} filters={filters} setFilters={setFilters} />
           <ColorGroup />
-          <CheckGroup group={filterGroups[3]} />
+          <CheckGroup group={filterGroups[4]} filters={filters} setFilters={setFilters} />
           <RangeGroup title={t('filters.priceRange')} min={50} max={300} unit={t('filters.unitBaht')} />
 
           <Button variant="dark" className="mt-4 h-12 w-full bg-[#00214d] text-white hover:bg-black">
@@ -76,14 +116,24 @@ function SectionTitle({ title }) {
   )
 }
 
-function CheckGroup({ group }) {
-  const { t } = useLanguage()
+function CheckGroup({ group, filters, setFilters }) {
+  const { language, t } = useLanguage()
+  const title = group.title?.[language] || group.title?.th || t(group.titleKey)
 
   return (
-    <FilterSection title={t(group.titleKey)}>
+    <FilterSection title={title}>
       <div className={`mt-3 grid gap-x-3 gap-y-2 ${group.columns ? 'grid-cols-2' : 'grid-cols-1'}`}>
-        {group.items.map(([label, count]) => (
-          <CheckboxRow key={label} label={label} count={count} />
+        {group.items.map(([label, count, value]) => (
+          <CheckboxRow
+            key={label}
+            label={label}
+            value={value || label}
+            count={count}
+            filterKey={group.filterKey}
+            multi={group.multi}
+            filters={filters}
+            setFilters={setFilters}
+          />
         ))}
       </div>
       <Button type="button" variant="ghost" size="xs" className="mt-3 h-8 px-0 text-black hover:bg-transparent">
@@ -94,21 +144,53 @@ function CheckGroup({ group }) {
   )
 }
 
-function CheckboxRow({ label, count }) {
+function CheckboxRow({ label, value, count, filterKey, multi, filters, setFilters }) {
   const id = `filter-${label.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`
+  const selectedValues = String(filters?.[filterKey] || 'All')
+    .split(',')
+    .map((item) => item.trim())
+    .filter((item) => item && item !== 'All')
+  const checked = filterKey ? (multi ? selectedValues.includes(value) : filters?.[filterKey] === value) : undefined
+  const updateFilter = (nextChecked) => {
+    if (!filterKey) return
+    setFilters((current) => ({
+      ...current,
+      [filterKey]: getNextFilterValue({
+        currentValue: current[filterKey],
+        nextChecked,
+        value,
+        multi,
+      }),
+    }))
+  }
 
   return (
     <label htmlFor={id} className="group/row flex min-w-0 cursor-pointer items-center gap-2 rounded-md py-1 text-sm font-medium text-black hover:bg-muted/60">
-      <Checkbox id={id} className="size-4" />
+      <Checkbox id={id} className="size-4" checked={checked} onCheckedChange={updateFilter} />
       <Tooltip>
         <TooltipTrigger asChild>
           <span className="min-w-0 flex-1 truncate">{label}</span>
         </TooltipTrigger>
         <TooltipContent side="top">{label}</TooltipContent>
       </Tooltip>
-      <span className="shrink-0 text-zinc-600">({count})</span>
+      {count !== undefined && <span className="shrink-0 text-zinc-600">({count})</span>}
     </label>
   )
+}
+
+function getNextFilterValue({ currentValue, nextChecked, value, multi }) {
+  if (!multi) return nextChecked ? value : 'All'
+
+  const values = String(currentValue || 'All')
+    .split(',')
+    .map((item) => item.trim())
+    .filter((item) => item && item !== 'All')
+
+  const nextValues = nextChecked
+    ? Array.from(new Set([...values, value]))
+    : values.filter((item) => item !== value)
+
+  return nextValues.length > 0 ? nextValues.join(',') : 'All'
 }
 
 function ColorGroup() {

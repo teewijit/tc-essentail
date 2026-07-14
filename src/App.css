@@ -1,6 +1,6 @@
 .page-shell {
   width: min(100% - 20px, 100%);
-  max-width: 1400px;
+  max-width: 1600px;
   margin-inline: auto;
   padding-inline: clamp(16px, 2.8vw, 52px);
 }

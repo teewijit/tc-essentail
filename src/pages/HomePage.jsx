@@ -7,7 +7,7 @@ import { HomeSearchPanel } from '../components/home/HomeSearchPanel'
 export function HomePage({ homeData, catalogItems, query, setQuery, openCatalog, openDetail }) {
   return (
     <main>
-      <HomeHero />
+      <HomeHero openCatalog={openCatalog} />
       <HomeSearchPanel query={query} setQuery={setQuery} openCatalog={openCatalog} />
       <HomeImageSearchPanel query={query} setQuery={setQuery} openCatalog={openCatalog} />
       <HomePromotionSection

@@ -11,8 +11,46 @@ const matchesSearch = (fabric, search) => {
     .some((value) => value.toLowerCase().includes(query))
 }
 
+const getFabricTypeKeys = (fabric) => {
+  if (fabric.fabric_type) return [fabric.fabric_type]
+  if (Array.isArray(fabric.fabricTypes)) return fabric.fabricTypes
+
+  const usage = fabric.usage.toLowerCase()
+  const type = fabric.type.toLowerCase()
+  const inferred = []
+
+  if (['t-shirt', 'streetwear', 'underwear', 'crop/baby-tee', 'shirt'].includes(usage) || type.includes('cotton') || type.includes('tc')) {
+    inferred.push('single_jersey')
+  }
+
+  if (['jacket/hoody', 'pants'].includes(usage)) {
+    inferred.push('french_terry')
+  }
+
+  if (usage === 'polo' || type.includes('cvc')) {
+    inferred.push('pique')
+  }
+
+  return inferred.length > 0 ? inferred : [type.replace(/\s+/g, '_')]
+}
+
 const matchesFilter = (fabric, filters) => {
   if (filters.type && filters.type !== 'All' && fabric.type !== filters.type) {
+    return false
+  }
+
+  if (filters.fabric_type && filters.fabric_type !== 'All') {
+    const selectedTypes = String(filters.fabric_type)
+      .split(',')
+      .map((value) => value.trim().toLowerCase())
+      .filter(Boolean)
+    const fabricTypes = getFabricTypeKeys(fabric)
+    if (selectedTypes.length > 0 && !fabricTypes.some((fabricType) => selectedTypes.includes(fabricType))) {
+      return false
+    }
+  }
+
+  if (filters.category && filters.category !== 'All' && fabric.usage !== filters.category) {
     return false
   }
 
@@ -72,7 +110,7 @@ const filterCatalog = ({ search, filters, sort }) => {
 
 export const fallbackCatalog = filterCatalog({
   search: '',
-  filters: { type: 'All', color: 'All', gsm: 'All', width: 'All', usage: 'All' },
+  filters: { type: 'All', fabric_type: 'All', category: 'All', color: 'All', gsm: 'All', width: 'All', usage: 'All' },
   sort: 'Latest',
 })
 

@@ -6,29 +6,35 @@ import {
   CarouselContent,
   CarouselItem,
 } from '../ui/carousel'
+import bannerPolo from '../../assets/banner/banner_polo.jpg'
+import bannerPromo from '../../assets/banner/banner_promo.jpg'
+import bannerTshirt from '../../assets/banner/banner_t-shirt.jpg'
 
 const heroSlides = [
   {
-    id: 'tc-2401',
-    image: '/hero/hero-1.jpg',
-    alt: 'TC Smooth Knit fabric highlight',
-    targetHref: '#fabric/tc-2401',
+    id: 'banner-promo',
+    image: bannerPromo,
+    alt: 'Tee Culture promotional fabric banner',
+    filter: { fabric_type: 'single_jersey,french_terry' },
+    meta: { fabric_type: ['single_jersey', 'french_terry'] },
   },
   {
-    id: 'ct-1180',
-    image: '/hero/hero-2.jpg',
-    alt: 'Cotton Comfort 20s fabric highlight',
-    targetHref: '#fabric/ct-1180',
+    id: 'banner-polo',
+    image: bannerPolo,
+    alt: 'Polo fabric category banner',
+    filter: { category: 'Polo' },
+    meta: { category: 'polo' },
   },
   {
-    id: 'cvc-5502',
-    image: '/hero/hero-3.jpg',
-    alt: 'CVC Performance Pique fabric highlight',
-    targetHref: '#fabric/cvc-5502',
+    id: 'banner-t-shirt',
+    image: bannerTshirt,
+    alt: 'T-shirt fabric category banner',
+    filter: { category: 'T-Shirt' },
+    meta: { category: 't-shirt' },
   },
 ]
 
-export function HomeHero() {
+export function HomeHero({ openCatalog }) {
   const [api, setApi] = useState()
   const [current, setCurrent] = useState(0)
 
@@ -52,22 +58,24 @@ export function HomeHero() {
     return () => window.clearInterval(timer)
   }, [api])
 
-  const handleSlideClick = (targetHref) => {
-    if (window.location.hash === targetHref) {
-      window.dispatchEvent(new HashChangeEvent('hashchange'))
-    }
+  const handleSlideClick = (event, filter) => {
+    if (!openCatalog) return
+    event.preventDefault()
+    openCatalog(filter)
   }
 
   return (
-    <section className="relative min-h-[620px] overflow-hidden md:min-h-[500px]">
+    <section className="relative aspect-[1680/944] overflow-hidden bg-white">
       <Carousel setApi={setApi} opts={{ loop: true }} className="absolute inset-0 h-full w-full">
         <CarouselContent className="ml-0 h-full">
           {heroSlides.map((slide) => (
             <CarouselItem key={slide.id} className="h-full basis-full pl-0">
               <a
-                href={slide.targetHref}
+                href={`#/catalog?${new URLSearchParams(slide.filter).toString()}`}
                 aria-label={`Open ${slide.alt}`}
-                onClick={() => handleSlideClick(slide.targetHref)}
+                data-banner-category={slide.meta.category}
+                data-banner-fabric-type={slide.meta.fabric_type?.join(',')}
+                onClick={(event) => handleSlideClick(event, slide.filter)}
                 className="block h-full w-full"
               >
                 <img src={slide.image} alt={slide.alt} className="h-full w-full object-cover" />

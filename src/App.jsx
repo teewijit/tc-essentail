@@ -14,6 +14,17 @@ import { LoginPage } from './pages/LoginPage'
 import { ProfilePage } from './pages/ProfilePage'
 import './App.css'
 
+
+const defaultCatalogFilters = {
+  type: 'All',
+  fabric_type: 'All',
+  category: 'All',
+  color: 'All',
+  usage: 'All',
+  gsm: 'All',
+  width: 'All',
+}
+
 function App() {
   const [view, setView] = useState('home')
   const {
@@ -32,17 +43,20 @@ function App() {
   } = useFabricData()
 
   const openCatalog = useCallback((preset = {}) => {
-    if (preset.type || preset.color || preset.usage || preset.gsm || preset.width) {
+    const hasPreset = preset.type || preset.fabric_type || preset.category || preset.color || preset.usage || preset.gsm || preset.width
+
+    if (hasPreset) {
       setFilters((current) => {
         const next = {
-          ...current,
-          type: preset.type || current.type,
-          color: preset.color || current.color,
-          usage: preset.usage || current.usage,
-          gsm: preset.gsm || current.gsm,
-          width: preset.width || current.width,
+          ...defaultCatalogFilters,
+          type: preset.type || defaultCatalogFilters.type,
+          fabric_type: preset.fabric_type || defaultCatalogFilters.fabric_type,
+          category: preset.category || defaultCatalogFilters.category,
+          color: preset.color || defaultCatalogFilters.color,
+          usage: preset.usage || defaultCatalogFilters.usage,
+          gsm: preset.gsm || defaultCatalogFilters.gsm,
+          width: preset.width || defaultCatalogFilters.width,
         }
-        // คืน object เดิมถ้าค่าไม่เปลี่ยน — กัน re-render loop ตอนโหลด URL ที่มี query
         const changed = Object.keys(next).some((key) => next[key] !== current[key])
         return changed ? next : current
       })

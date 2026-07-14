@@ -11,6 +11,8 @@ export function useFabricData() {
   const [sort, setSort] = useState('Latest')
   const [filters, setFilters] = useState({
     type: 'All',
+    fabric_type: 'All',
+    category: 'All',
     color: 'All',
     gsm: 'All',
     width: 'All',
