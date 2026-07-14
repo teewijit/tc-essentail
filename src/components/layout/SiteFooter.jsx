@@ -23,8 +23,8 @@ export function SiteFooter() {
     <footer className="bg-[#061b3a] text-white">
       <div className="page-shell grid gap-6 py-7 md:grid-cols-[1.15fr_0.7fr_0.85fr_0.9fr_1.2fr]">
         <div>
-          <p className="mb-1 text-lg font-extrabold leading-none text-primary">TEE CULTURE</p>
-          <p className="text-sm font-bold leading-none">FABRIC</p>
+          <p className="mb-1 text-lg font-extrabold leading-none text-primary">{t('footer.title')}</p>
+          <p className="text-sm font-bold leading-none">{t('footer.subtitle')}</p>
           <p className="mt-2.5 max-w-48 text-[11px] leading-4 text-white/75">
             {t('footer.blurb')}
           </p>

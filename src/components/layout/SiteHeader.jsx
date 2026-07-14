@@ -35,7 +35,7 @@ export function SiteHeader({ currentView, setView }) {
             </button>
           </div>
           <div className="hidden items-center gap-5 md:flex">
-            <span>Line: @teeculture</span>
+            <span>Line: @teeculture101</span>
             <span className="inline-flex items-center gap-1">
               <Phone size={12} aria-hidden="true" />
               02-123-4567
@@ -66,8 +66,7 @@ export function SiteHeader({ currentView, setView }) {
             onClick={() => setView('home')}
             className="relative z-10 text-left leading-none transition-colors"
           >
-            <span className="block text-xl font-extrabold tracking-tight text-primary">TEE CULTURE</span>
-            <span className="block text-sm font-bold tracking-tight">FABRIC</span>
+            <span className="block text-xl font-extrabold tracking-tight text-primary">TEE CULTURE &nbsp;<span className="font-bold tracking-tight text-white">101</span></span>
           </button>
 
           <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 text-md font-semibold xl:gap-9 lg:flex">
