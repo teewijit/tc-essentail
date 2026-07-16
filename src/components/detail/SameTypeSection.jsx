@@ -2,9 +2,10 @@ import { Check } from 'lucide-react'
 import { useLanguage } from '../../i18n/useLanguage'
 import { FabricSwatch } from '../product/FabricSwatch'
 import { getSameTypeFabrics } from './relatedFabrics'
+import { getFabricName } from '../../lib/fabricName'
 
 export function SameTypeSection({ fabric, onOpen }) {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
   const sameTypeFabrics = getSameTypeFabrics(fabric)
 
   if (!sameTypeFabrics.length) {
@@ -27,7 +28,7 @@ export function SameTypeSection({ fabric, onOpen }) {
                   if (!isCurrent) onOpen(item)
                 }}
                 aria-current={isCurrent ? 'true' : undefined}
-                aria-label={`${item.code} ${item.name}`}
+                aria-label={getFabricName(item, language)}
                 className={`relative aspect-square overflow-hidden rounded-sm transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
                   isCurrent ? 'ring-2 ring-primary ring-offset-2' : 'hover:ring-2 hover:ring-primary/40'
                 }`}

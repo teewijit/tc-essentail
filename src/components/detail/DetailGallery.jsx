@@ -73,7 +73,7 @@ export function DetailGallery({ fabric, activeColor, setActiveColor }) {
       </div>
 
       <Card
-        className="order-1 relative h-[clamp(520px,42vw,680px)] cursor-crosshair overflow-hidden rounded-xl p-0 shadow-sm sm:order-2"
+        className="order-1 relative h-[clamp(320px,105vw,460px)] cursor-crosshair overflow-hidden rounded-xl p-0 shadow-sm sm:order-2 sm:h-[clamp(520px,42vw,680px)]"
         onPointerEnter={moveLens}
         onPointerMove={moveLens}
         onPointerLeave={() => setLens((current) => ({ ...current, active: false }))}

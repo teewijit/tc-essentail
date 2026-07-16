@@ -5,8 +5,8 @@ import { Separator } from '../ui/separator'
 import { useLanguage } from '../../i18n/useLanguage'
 import { formatPrice } from '../../lib/format'
 import { getFabricName } from '../../lib/fabricName'
+import { getFabricDescription } from '../../lib/fabricDescription'
 
-/** ส่วนหัวสินค้า — ประเภท, ปุ่ม fav/bookmark/share, ชื่อ และคำอธิบาย */
 export function DetailSummary({ fabric, saved, bookmarked, onFavorite, onBookmark, onShare }) {
   const { language, t } = useLanguage()
 
@@ -18,7 +18,7 @@ export function DetailSummary({ fabric, saved, bookmarked, onFavorite, onBookmar
           <Button
             type="button"
             variant="ghost"
-            className="p-0 m-0"
+            className="m-0 p-0"
             onClick={onFavorite}
             aria-label={saved ? t('actions.removeFavorite') : t('actions.addFavorite')}
             aria-pressed={saved}
@@ -33,7 +33,7 @@ export function DetailSummary({ fabric, saved, bookmarked, onFavorite, onBookmar
           <Button
             type="button"
             variant="ghost"
-            className="p-0 m-0"
+            className="m-0 p-0"
             onClick={onBookmark}
             aria-label={bookmarked ? t('actions.removeBookmark') : t('actions.bookmark')}
             aria-pressed={bookmarked}
@@ -48,7 +48,7 @@ export function DetailSummary({ fabric, saved, bookmarked, onFavorite, onBookmar
           <Button
             type="button"
             variant="ghost"
-            className="p-0 m-0"
+            className="m-0 p-0"
             onClick={onShare}
             aria-label={t('actions.copyProductLink')}
           >
@@ -58,8 +58,10 @@ export function DetailSummary({ fabric, saved, bookmarked, onFavorite, onBookmar
       </div>
       <div className="grid items-center gap-4 sm:grid-cols-[minmax(0,1fr)_auto]">
         <div className="flex flex-col">
-          <h1 className="text-4xl font-extrabold leading-tight text-[#061b3a]">{fabric.code}</h1>
-          <p className="text-xl font-semibold text-[#061b3a]">{getFabricName(fabric, language)}</p>
+          <h1 className="text-3xl font-extrabold leading-tight text-[#061b3a] sm:text-4xl">
+            {getFabricName(fabric, language)}
+          </h1>
+          <span className="sr-only">{fabric.code}</span>
         </div>
         <div className="sm:text-right">
           <p className="text-sm font-semibold text-zinc-500">{t('detail.priceKg')}</p>
@@ -69,7 +71,7 @@ export function DetailSummary({ fabric, saved, bookmarked, onFavorite, onBookmar
         </div>
       </div>
       <Separator className="my-3 h-0.5 w-12 bg-primary" />
-      <p className="max-w-xl text-base leading-7 text-[#061b3a]">{fabric.description}</p>
+      <p className="max-w-xl text-base leading-7 text-[#061b3a]">{getFabricDescription(fabric, language)}</p>
     </section>
   )
 }

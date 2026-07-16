@@ -5,6 +5,7 @@ import { formatPrice } from '../../lib/format'
 import { useFavoritesStore } from '../../store/useCollections'
 import { useLanguage } from '../../i18n/useLanguage'
 import { getFabricName } from '../../lib/fabricName'
+import { formatFabricLength } from '../../lib/fabricLength'
 import { FabricSwatch } from './FabricSwatch'
 
 const productDots = ['#101010', '#69553e', '#a6a6a6', '#8e2149', '#294272']
@@ -21,6 +22,7 @@ const cardPresets = {
     showName: true,
     showColorBadge: true,
     showColorDots: false,
+    showLength: true,
     popularBadge: true,
   },
   rail: {
@@ -34,6 +36,7 @@ const cardPresets = {
     showName: false,
     showColorBadge: false,
     showColorDots: true,
+    showLength: true,
     popularBadge: false,
   },
   related: {
@@ -47,6 +50,7 @@ const cardPresets = {
     showName: true,
     showColorBadge: false,
     showColorDots: true,
+    showLength: true,
     popularBadge: false,
   },
 }
@@ -84,7 +88,7 @@ function ProductBadge({ fabric, badge, rank, config }) {
 
   if (config.popularBadge && fabric.isPopular) {
     return (
-      <Badge className="absolute bottom-3 left-3 h-5 gap-1 bg-primary px-2 text-lg text-primary-foreground">
+      <Badge className="absolute bottom-3 left-3 h-5 gap-1 bg-primary px-2 text-xs text-primary-foreground">
         {t('catalog.bestSeller')}
       </Badge>
     )
@@ -116,10 +120,11 @@ function FavoriteButton({ fabric, config }) {
           toggle(fabric)
         }
       }}
-      className={`${config.favoriteClass} absolute z-10 grid size-8 cursor-pointer'}`}
+      className={`${config.favoriteClass} absolute z-10 grid size-8 cursor-pointer place-items-center rounded-full bg-white/85 text-[#061b3a] shadow-sm transition hover:bg-white hover:text-red-500`}
     >
       <Heart
-        className={`size-8 transition-all duration-200 hover:scale-150 ${isFavorite ? 'fill-red-500 text-red-500' : 'fill-white text-black/40'}`}
+        size={config.heartSize}
+        className={`transition-all duration-200 hover:scale-110 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`}
       />
     </span>
   )
@@ -129,23 +134,24 @@ function ProductInfo({ fabric, config }) {
   const { language } = useLanguage()
   const specText = config.showName ? `${fabric.gsm} GSM` : `${fabric.width}"`
   const trailingSpecText = config.showName ? `${fabric.width}"` : `${fabric.gsm} GSM`
+  const specParts = [specText, trailingSpecText]
+
+  if (config.showLength && fabric.lengthPerKg) {
+    specParts.push(formatFabricLength(fabric, language))
+  }
 
   return (
     <div>
-      <h3 className={config.titleClass}>{fabric.code}</h3>
-      {config.showName && <p className="mt-1 truncate text-sm text-zinc-600">{getFabricName(fabric, language)}</p>}
-      <p className={config.specClass}>
-        {specText}
-        <span className={config.showName ? 'mx-2 text-sm text-zinc-300' : 'mx-1 text-sm text-zinc-300'}>•</span>
-        {trailingSpecText}
-      </p>
+      <h3 className={config.titleClass}>{getFabricName(fabric, language)}</h3>
+      <span className="sr-only">{fabric.code}</span>
+      <p className={config.specClass}>{specParts.join(' • ')}</p>
     </div>
   )
 }
 
 function ProductMeta({ fabric, config }) {
   return (
-    <div className={config.showName ? 'flex items-center justify-between gap-3' : 'mt-3 flex items-center justify-between'}>
+    <div className={config.showName ? 'flex items-center justify-between gap-3' : 'mt-3 flex items-center justify-between gap-2'}>
       {config.showColorBadge && (
         <Badge variant="secondary" className="rounded-full px-2 py-1 text-xs text-zinc-700">
           {fabric.color}
@@ -153,7 +159,7 @@ function ProductMeta({ fabric, config }) {
       )}
       {config.showColorDots && <ColorDots />}
       <strong className={config.priceClass}>{formatPrice(fabric.price)} / KG</strong>
-      </div>
+    </div>
   )
 }
 

@@ -1,14 +1,15 @@
 import { Card, CardContent } from '../ui/card'
 import { useLanguage } from '../../i18n/useLanguage'
+import { formatFabricLength } from '../../lib/fabricLength'
 
-/** ตารางสเปคผ้า */
 export function DetailSpecTable({ fabric }) {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
   const rows = [
     [t('detail.specs.structure'), fabric.type],
     [t('detail.specs.composition'), fabric.composition],
     [t('detail.specs.weight'), `${fabric.gsm} GSM`],
     [t('detail.specs.width'), `${fabric.width}"`],
+    [t('detail.specs.length'), formatFabricLength(fabric, language)],
     [t('detail.specs.color'), fabric.color],
     [t('detail.specs.usage'), fabric.usage],
   ]

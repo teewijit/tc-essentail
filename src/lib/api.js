@@ -154,6 +154,9 @@ export const api = {
       qr_payload: `#/fabric/${encodeURIComponent(fabric.id)}`,
       code: fabric.code,
       name: fabric.name,
+      name_en: fabric.name_en,
+      name_th: fabric.name_th,
+      lengthPerKg: fabric.lengthPerKg,
     }
   },
 

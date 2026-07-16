@@ -3,6 +3,7 @@ import { formatPrice } from '../../lib/format'
 import { getFabricName } from '../../lib/fabricName'
 import { useLanguage } from '../../i18n/useLanguage'
 import { FabricSwatch } from './FabricSwatch'
+import { formatFabricLength } from '../../lib/fabricLength'
 
 export function PromotionFabricCard({ item, onOpen }) {
   const { fabric, promoPrice, compareAtPrice, discountPercent } = item
@@ -27,7 +28,7 @@ export function PromotionFabricCard({ item, onOpen }) {
         <CardContent className="space-y-2 p-4">
           <div>
             <h3 className="truncate text-2xl font-bold text-black">{getFabricName(fabric, language)}</h3>
-            <p className="text-xl font-semibold text-[#1a7a3a]">{fabric.code}</p>
+            <span className="sr-only">{fabric.code}</span>
           </div>
           <ul className="space-y-0.5 text-base text-zinc-600">
             <li>
@@ -37,6 +38,10 @@ export function PromotionFabricCard({ item, onOpen }) {
             <li>
               <span className="text-zinc-500">{t('home.promoWeight')}</span>{' '}
               <span className="font-medium text-zinc-800">{fabric.gsm} GSM</span>
+            </li>
+            <li>
+              <span className="text-zinc-500">{t('home.promoLength')}</span>{' '}
+              <span className="font-medium text-zinc-800">{formatFabricLength(fabric, language)}</span>
             </li>
           </ul>
           <div className="flex items-end justify-between gap-2 pt-1">

@@ -5,6 +5,9 @@ import { Card, CardContent } from '../ui/card'
 import { Button } from '../ui/Button'
 import { FabricSwatch } from '../product/FabricSwatch'
 import { exportFabricSpecPdf } from '../../lib/fabricSpecPdf'
+import { getFabricName } from '../../lib/fabricName'
+import { getFabricDescription } from '../../lib/fabricDescription'
+import { formatFabricLength } from '../../lib/fabricLength'
 
 const copy = {
   th: {
@@ -12,8 +15,8 @@ const copy = {
     review: 'รีวิว ({count})',
     specification: 'Specification',
     packageAndShipping: 'บรรจุภัณฑ์และระยะเวลาส่งของ',
-    rollInfo: 'หน้าม้วน : ผ้าโรล (1 ผ้าโรล คิดราคาขายต่อกิโลกรัม คำนวณตามน้ำหนักจริงของม้วนนั้น)',
-    shippingInfo: 'ระยะเวลาส่งของ : 3-5 วันทำการ (ขึ้นอยู่กับขนส่งแต่ละแห่ง)',
+    rollInfo: 'หน้าม้วน: ผ้าโรล ราคาคิดตามน้ำหนักจริงของม้วนนั้น',
+    shippingInfo: 'ระยะเวลาส่งของ: 3-5 วันทำการ ขึ้นอยู่กับขนส่งแต่ละแห่ง',
     noReviews: 'ยังไม่มีรีวิวสำหรับผ้ารุ่นนี้',
     noReviewsHint: 'รีวิวจากลูกค้าจะช่วยยืนยันคุณภาพล็อตและการใช้งานจริง',
     specs: {
@@ -60,8 +63,8 @@ export function DetailSidePanels({ fabric, activeColor }) {
   const labels = copy[language] || copy.th
   const [activePanel, setActivePanel] = useState('detail')
   const reviews = fabric.reviews || []
+  const fabricName = getFabricName(fabric, language)
   const specRows = [
-    [labels.specs.fabricCode, fabric.code],
     [labels.specs.material, fabric.composition],
     [labels.specs.type, 'Knitted Fabric'],
     [labels.specs.style, fabric.usage],
@@ -69,7 +72,7 @@ export function DetailSidePanels({ fabric, activeColor }) {
     [labels.specs.feature, fabric.highlights.join(', ')],
     [labels.specs.certification, 'Oeko-Tex Standard 100'],
     [labels.specs.fabricType, fabric.type],
-    [labels.specs.length, '2.50 หลา / kg'],
+    [labels.specs.length, formatFabricLength(fabric, language)],
     [labels.specs.width, `${fabric.width}"`],
     [labels.specs.weight, `${fabric.gsm} GSM`],
   ]
@@ -78,18 +81,10 @@ export function DetailSidePanels({ fabric, activeColor }) {
     <div className="w-full">
       <div className="flex flex-wrap items-end gap-3">
         <div className="flex text-base font-extrabold text-[#061b3a]" role="tablist" aria-label={labels.specification}>
-          <TabButton
-            active={activePanel === 'detail'}
-            onClick={() => setActivePanel('detail')}
-            controls="detail-panel"
-          >
+          <TabButton active={activePanel === 'detail'} onClick={() => setActivePanel('detail')} controls="detail-panel">
             {labels.detail}
           </TabButton>
-          <TabButton
-            active={activePanel === 'review'}
-            onClick={() => setActivePanel('review')}
-            controls="review-panel"
-          >
+          <TabButton active={activePanel === 'review'} onClick={() => setActivePanel('review')} controls="review-panel">
             {labels.review.replace('{count}', reviews.length)}
           </TabButton>
         </div>
@@ -112,7 +107,7 @@ export function DetailSidePanels({ fabric, activeColor }) {
                       variant="outline"
                       size="lg"
                       className="mt-4 h-12 w-full"
-                      onClick={() => exportFabricSpecPdf(fabric)}
+                      onClick={() => exportFabricSpecPdf(fabric, language)}
                     >
                       <Download className="size-5" aria-hidden="true" />
                       {t('actions.downloadFabricCard')}
@@ -126,17 +121,9 @@ export function DetailSidePanels({ fabric, activeColor }) {
                 </div>
               </section>
 
-              {/* <section className="mt-7 max-w-3xl text-sm leading-7 text-[#061b3a]">
-                <h3 className="font-extrabold">{labels.packageAndShipping}</h3>
-                <p>
-                  {labels.rollInfo}
-                </p>
-                <p>{labels.shippingInfo}</p>
-              </section> */}
-
               <section className="mt-3 space-y-4 text-base leading-7 text-[#061b3a]">
                 <p>
-                  <strong>{fabric.name}</strong> {fabric.description} {fabric.highlights.join(' ')}
+                  <strong>{fabricName}</strong> {getFabricDescription(fabric, language)} {fabric.highlights.join(' ')}
                 </p>
               </section>
             </div>

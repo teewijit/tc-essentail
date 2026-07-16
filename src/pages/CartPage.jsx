@@ -401,7 +401,7 @@ function CartItemsPanel({ labels, language, items, cartCount, setQty, removeItem
                   <h3 className="mt-1 text-base font-extrabold leading-snug text-[#061b3a]">{getFabricName(fabric, language)}</h3>
                 </button>
                 <p className="mt-1 text-sm text-zinc-600">
-                  {labels.code}: {fabric.code} • {labels.color}: {fabric.color}
+                  {labels.color}: {fabric.color}
                 </p>
                 <p className="text-sm text-zinc-600">
                   {labels.width}: {fabric.width}" • {labels.gsm}: {fabric.gsm} • {labels.type}: {fabric.type}

@@ -1,4 +1,6 @@
 export function FabricSwatch({ fabric, className = '' }) {
+  const label = fabric.name_en || fabric.name || fabric.code
+
   return (
     <div
       className={`fabric-swatch ${className}`}
@@ -6,8 +8,7 @@ export function FabricSwatch({ fabric, className = '' }) {
         '--swatch': fabric.colorValue,
         '--swatch-soft': `${fabric.colorValue}33`,
       }}
-      aria-label={`${fabric.name} ${fabric.color}`}
+      aria-label={`${label} ${fabric.color}`}
     />
   )
 }
-

@@ -22,9 +22,9 @@ export function HowToOrderSection() {
             const [title, copy] = t(key)
             return (
             <div key={key} className="relative text-center">
-              {index > 0 && <span className="absolute -left-1/2 top-7 hidden w-full border-t border-dashed border-zinc-400 md:block" />}
-              <span className="relative z-10 mx-auto grid size-14 place-items-center rounded-full bg-white text-[#061b3a] shadow-sm">
-                <Icon size={25} aria-hidden="true" />
+              {index > 0 && <span className="absolute -left-1/2 top-9 hidden w-full border-t border-dashed border-zinc-400 md:block" />}
+              <span className="relative z-10 mx-auto grid size-18 place-items-center rounded-full bg-white text-[#061b3a] shadow-sm ring-1 ring-black/5">
+                <Icon className="size-9" aria-hidden="true" />
               </span>
               <h3 className="mt-3 text-base font-extrabold text-black">{title}</h3>
               <p className="mt-2 text-sm leading-5 text-zinc-600">{copy}</p>

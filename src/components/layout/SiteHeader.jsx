@@ -185,8 +185,8 @@ function WishlistButton({ setView }) {
                 <div key={fabric.id} className="flex items-center gap-3 rounded-lg p-1.5 hover:bg-zinc-50">
                   <FabricSwatch fabric={fabric} className="h-10 w-12 shrink-0 rounded-md" />
                   <div className="min-w-0">
-                    <p className="truncate font-bold text-[#061b3a]">{fabric.code}</p>
-                    <p className="truncate text-zinc-500">{getFabricName(fabric, language)}</p>
+                    <p className="truncate font-bold text-[#061b3a]">{getFabricName(fabric, language)}</p>
+                    <span className="sr-only">{fabric.code}</span>
                   </div>
                 </div>
               ))}
@@ -254,8 +254,8 @@ function CartButton({ setView }) {
                   <div key={fabric.id} className="flex items-center gap-3 rounded-lg p-1.5 hover:bg-zinc-50">
                     <FabricSwatch fabric={fabric} className="h-11 w-13 shrink-0 rounded-md" />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-bold text-[#061b3a]">{fabric.code}</p>
-                      <p className="truncate text-zinc-500">{getFabricName(fabric, language)}</p>
+                      <p className="truncate font-bold text-[#061b3a]">{getFabricName(fabric, language)}</p>
+                      <span className="sr-only">{fabric.code}</span>
                       <p className="text-xs text-zinc-500">
                         {qty} {fabric.unit} x {formatPrice(fabric.price)}
                       </p>

@@ -9,6 +9,7 @@ import { SimilarProductsSection } from "../components/detail/SimilarProductsSect
 import { getStockSummary } from "../components/detail/detailPricingDisplay";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../i18n/useLanguage";
+import { getFabricName } from "../lib/fabricName";
 import { useCartStore } from "../store/useCartStore";
 import { useBookmarksStore, useFavoritesStore } from "../store/useCollections";
 
@@ -29,7 +30,7 @@ export function FabricDetailPage({ fabric, goBack, openDetail, goCart }) {
 
   const handleAddToCart = () => {
     addToCart(fabric, 1);
-    setActionMessage(t("detail.addedToCart", { code: fabric.code }));
+    setActionMessage(t("detail.addedToCart", { code: getFabricName(fabric, language) }));
   };
 
   const handleBuyNow = () => {
@@ -77,7 +78,7 @@ export function FabricDetailPage({ fabric, goBack, openDetail, goCart }) {
           <ChevronRight className="size-6" aria-hidden="true" />
           <span>{fabric.type}</span>
           <ChevronRight className="size-6" aria-hidden="true" />
-          <strong className="text-[#061b3a]">{fabric.code}</strong>
+          <strong className="text-[#061b3a]">{getFabricName(fabric, language)}</strong>
         </div>
       </section>
 

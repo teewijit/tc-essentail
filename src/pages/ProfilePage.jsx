@@ -20,7 +20,9 @@ import { Separator } from '../components/ui/separator'
 import { FabricCard } from '../components/product/FabricCard'
 import { FabricSwatch } from '../components/product/FabricSwatch'
 import { formatPrice } from '../lib/format'
+import { getFabricName } from '../lib/fabricName'
 import { useNow } from '../hooks/useNow'
+import { useLanguage } from '../i18n/useLanguage'
 import { useAddressStore } from '../store/useAddressStore'
 import { useAuthStore } from '../store/useAuthStore'
 import { useBookmarksStore, useFavoritesStore } from '../store/useCollections'
@@ -335,6 +337,7 @@ function FolderChip({ active, onClick, onDelete, children }) {
 
 function ReservationsSection({ reservations, openDetailById, now }) {
   const cancel = useReservationStore((state) => state.cancel)
+  const { language } = useLanguage()
 
   if (reservations.length === 0) {
     return <EmptyState message="ยังไม่มีการจองผ้า กด RESERVE 48 HOURS ในหน้าสินค้าเพื่อจอง" />
@@ -349,8 +352,8 @@ function ReservationsSection({ reservations, openDetailById, now }) {
               <FabricSwatch fabric={fabric} className="h-16 w-20 rounded-lg" />
             </button>
             <div className="min-w-40 flex-1">
-              <h2 className="text-sm font-extrabold text-[#061b3a]">{fabric.code}</h2>
-              <p className="text-xs text-zinc-600">{fabric.name}</p>
+              <h2 className="text-sm font-extrabold text-[#061b3a]">{getFabricName(fabric, language)}</h2>
+              <span className="sr-only">{fabric.code}</span>
               <p className="mt-1 text-xs text-zinc-500">
                 จองเมื่อ {new Date(reservedAt).toLocaleString('th-TH', { dateStyle: 'short', timeStyle: 'short' })}
               </p>
@@ -373,6 +376,7 @@ function ReservationsSection({ reservations, openDetailById, now }) {
 
 function OrdersSection() {
   const orders = useOrderStore((state) => state.orders)
+  const { language } = useLanguage()
 
   if (orders.length === 0) {
     return <EmptyState message="ยังไม่มีประวัติคำสั่งซื้อ — สั่งซื้อจากตะกร้าแล้วรายการจะแสดงที่นี่" />
@@ -399,8 +403,8 @@ function OrdersSection() {
               <div className="space-y-1 text-xs text-zinc-600">
                 {order.items.map(({ fabric, qty }) => (
                   <div key={fabric.id} className="flex justify-between">
-                    <span>{fabric.code} — {fabric.name}</span>
-                    <span>{qty} KG × {formatPrice(fabric.price)}</span>
+                    <span>{getFabricName(fabric, language)}</span>
+                    <span>{qty} KG x {formatPrice(fabric.price)}</span>
                   </div>
                 ))}
               </div>

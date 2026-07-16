@@ -2,6 +2,8 @@ import { ChevronRight } from 'lucide-react'
 import { useLanguage } from '../../i18n/useLanguage'
 import { FabricSwatch } from '../product/FabricSwatch'
 import { getSimilarFabrics } from './relatedFabrics'
+import { getFabricName } from '../../lib/fabricName'
+import { formatFabricLength } from '../../lib/fabricLength'
 
 export function SimilarProductsSection({ fabric, onOpen, onViewAll }) {
   const { language, t } = useLanguage()
@@ -36,7 +38,7 @@ export function SimilarProductsSection({ fabric, onOpen, onViewAll }) {
               <div>
                 {/* <p className="text-xl font-semibold text-zinc-500">{item.type}</p> */}
                 {/* <h3 className="text-3xl font-extrabold text-[#061b3a] transition-colors group-hover:text-primary">{item.code}</h3> */}
-                <p className="line-clamp-2 text-2xl font-semibold text-[#061b3a]">{item.name}</p>
+                <p className="line-clamp-2 text-2xl font-semibold text-[#061b3a]">{getFabricName(item, language)}</p>
               </div>
 
               <dl className="grid grid-cols-2 gap-2 text-md text-zinc-600">
@@ -51,6 +53,10 @@ export function SimilarProductsSection({ fabric, onOpen, onViewAll }) {
                 <div>
                   <dt className="font-semibold text-zinc-500">{t('detail.specs.width')}</dt>
                   <dd className="font-bold text-[#061b3a]">{item.width}"</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-zinc-500">{t('detail.specs.length')}</dt>
+                  <dd className="font-bold text-[#061b3a]">{formatFabricLength(item, language)}</dd>
                 </div>
                 <div>
                   <dt className="font-semibold text-zinc-500">{t('detail.priceKg')}</dt>
