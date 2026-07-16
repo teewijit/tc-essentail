@@ -113,8 +113,8 @@ export function FabricDetailPage({ fabric, goBack, openDetail, goCart }) {
 
           <div className="flex flex-wrap items-center justify-center gap-3 text-base font-extrabold">
             <Button
-              variant="secondary"
-              className="h-12 w-full max-w-[220px] rounded-xl px-5"
+              variant="outline"
+              className="h-12 w-full max-w-[220px] rounded-xl border-2 border-[#061b3a] bg-white px-5 font-extrabold text-[#061b3a] shadow-sm hover:bg-[#061b3a] hover:text-white"
               onClick={handleAddToCart}
             >
               <ShoppingBag className="size-5" aria-hidden="true" />

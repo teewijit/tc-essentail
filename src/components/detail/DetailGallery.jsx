@@ -1,16 +1,14 @@
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 import { colors } from '../../data/fabrics'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/card'
 import { FabricSwatch } from '../product/FabricSwatch'
 
-/** แกลเลอรีสินค้า — ภาพหลัก + thumbnail เฉดสี เลื่อนซ้าย/ขวาได้ */
 export function DetailGallery({ fabric, activeColor, setActiveColor }) {
   const [lens, setLens] = useState({ active: false, x: 50, y: 50 })
 
-  // เฉดสีตัวอย่าง: สีจริงของผ้าก่อน ตามด้วยสีมาตรฐานของร้าน
   const swatchColors = [
     fabric.colorValue,
     ...colors.map((color) => color.value).filter((value) => value !== fabric.colorValue),
@@ -30,9 +28,52 @@ export function DetailGallery({ fabric, activeColor, setActiveColor }) {
   }
 
   return (
-    <div>
+    <div className="grid gap-3 sm:grid-cols-[82px_minmax(0,1fr)]">
+      <div className="order-2 flex items-center justify-center gap-2 sm:order-1 sm:flex-col">
+        <Button
+          variant="outline"
+          size="icon-lg"
+          className="size-10 shrink-0 rounded-lg bg-white hover:bg-primary/10"
+          aria-label="Previous shade"
+          onClick={() => step(-1)}
+        >
+          <ChevronUp className="hidden size-5 sm:block" aria-hidden="true" />
+          <ChevronUp className="size-5 rotate-[-90deg] sm:hidden" aria-hidden="true" />
+        </Button>
+
+        <div className="flex max-w-full gap-2 overflow-x-auto py-1 sm:max-h-[440px] sm:flex-col sm:overflow-x-visible sm:overflow-y-auto sm:px-1">
+          {swatchColors.map((color, index) => (
+            <button
+              key={color}
+              type="button"
+              onClick={() => setActiveColor(color)}
+              className={`size-16 shrink-0 overflow-hidden rounded-lg border-2 bg-white p-0.5 shadow-sm transition-colors sm:size-[72px] ${
+                color === activeColor
+                  ? 'border-black ring-2 ring-white outline outline-1 outline-black'
+                  : 'border-transparent hover:border-primary/60'
+              }`}
+              aria-label={`Shade ${index + 1}`}
+              aria-pressed={color === activeColor}
+            >
+              <FabricSwatch fabric={{ ...fabric, colorValue: color }} className="h-full w-full rounded-md" />
+            </button>
+          ))}
+        </div>
+
+        <Button
+          variant="outline"
+          size="icon-lg"
+          className="size-10 shrink-0 rounded-lg bg-white hover:bg-primary/10"
+          aria-label="Next shade"
+          onClick={() => step(1)}
+        >
+          <ChevronDown className="hidden size-5 sm:block" aria-hidden="true" />
+          <ChevronDown className="size-5 rotate-[-90deg] sm:hidden" aria-hidden="true" />
+        </Button>
+      </div>
+
       <Card
-        className="relative cursor-crosshair overflow-hidden rounded-xl p-0 shadow-sm"
+        className="order-1 relative h-[clamp(520px,42vw,680px)] cursor-crosshair overflow-hidden rounded-xl p-0 shadow-sm sm:order-2"
         onPointerEnter={moveLens}
         onPointerMove={moveLens}
         onPointerLeave={() => setLens((current) => ({ ...current, active: false }))}
@@ -45,7 +86,7 @@ export function DetailGallery({ fabric, activeColor, setActiveColor }) {
         {fabric.isNew && !fabric.isPopular && (
           <Badge className="absolute left-4 top-4 z-10 bg-[#061b3a] text-xs text-white">NEW</Badge>
         )}
-        <FabricSwatch fabric={{ ...fabric, colorValue: activeColor }} className="h-[clamp(520px,42vw,680px)] w-full" />
+        <FabricSwatch fabric={{ ...fabric, colorValue: activeColor }} className="absolute inset-0 h-full w-full" />
         <div
           className={`fabric-zoom-lens pointer-events-none absolute z-20 size-44 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-white/90 shadow-[0_14px_34px_rgba(0,0,0,0.24)] ring-1 ring-black/15 transition-opacity duration-150 ${
             lens.active ? 'opacity-100' : 'opacity-0'
@@ -61,29 +102,6 @@ export function DetailGallery({ fabric, activeColor, setActiveColor }) {
           aria-hidden="true"
         />
       </Card>
-
-      <div className="mt-3 flex items-center justify-center gap-3">
-        <Button variant="outline" size="icon-lg" className="size-10 rounded-full hover:bg-primary/10" aria-label="เฉดสีก่อนหน้า" onClick={() => step(-1)}>
-          <ChevronLeft className="size-5" aria-hidden="true" />
-        </Button>
-        {swatchColors.map((color, index) => (
-          <button
-            key={color}
-            type="button"
-            onClick={() => setActiveColor(color)}
-            className={`h-16 w-20 overflow-hidden rounded-lg border-2 transition-colors ${
-              color === activeColor ? 'border-primary' : 'border-transparent hover:border-primary/40'
-            }`}
-            aria-label={`เฉดสีที่ ${index + 1}`}
-            aria-pressed={color === activeColor}
-          >
-            <FabricSwatch fabric={{ ...fabric, colorValue: color }} className="h-full w-full" />
-          </button>
-        ))}
-        <Button variant="outline" size="icon-lg" className="size-10 rounded-full hover:bg-primary/10" aria-label="เฉดสีถัดไป" onClick={() => step(1)}>
-          <ChevronRight className="size-5" aria-hidden="true" />
-        </Button>
-      </div>
     </div>
   )
 }
