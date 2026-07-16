@@ -14,10 +14,11 @@ export function HomePromotionSection({ promotions = [], catalogItems = [], fallb
   const title = t('home.promoTitle')
 
   return (
-    <section className="page-shell py-8" aria-labelledby="home-promotion-heading">
+    <section className="bg-white py-8" aria-labelledby="home-promotion-heading">
+      <div className="page-shell">
       <div className="rounded-xl border border-[#e8e4de] bg-[#faf8f5] px-5 py-6 shadow-sm md:px-8 md:py-8">
         <header className="mb-6 text-center md:mb-8">
-          <h2 id="home-promotion-heading" className="text-3xl font-bold text-black">
+          <h2 id="home-promotion-heading" className="text-2xl font-extrabold text-black">
             {title}
           </h2>
         </header>
@@ -26,6 +27,7 @@ export function HomePromotionSection({ promotions = [], catalogItems = [], fallb
             <PromotionFabricCard key={item.fabricId} item={item} onOpen={onOpen} />
           ))}
         </div>
+      </div>
       </div>
     </section>
   )

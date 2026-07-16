@@ -10,18 +10,21 @@ const cards = [
 
 export function RecommendationSection() {
   return (
-    <section className="page-shell py-5">
-      <HomeSectionHeader title="RECOMMENDED FOR YOU" />
-      <div className="grid gap-4 md:grid-cols-4">
-        {cards.map(([title, copy, color]) => (
-          <div key={title} className="recommend-card rounded-lg p-5 text-white" style={{ '--tone': color }}>
-            <h3 className="text-lg font-extrabold">{title}</h3>
-            <p className="mt-2 min-h-12 text-sm leading-6 text-white/90">{copy}</p>
-            <Button variant="outline" className="mt-4 h-11 bg-white text-xs text-black hover:bg-primary">SHOP NOW</Button>
-          </div>
-        ))}
+    <section className="bg-white py-8">
+      <div className="page-shell">
+        <HomeSectionHeader title="RECOMMENDED FOR YOU" />
+        <div className="grid gap-4 md:grid-cols-4">
+          {cards.map(([title, copy, color]) => (
+            <div key={title} className="recommend-card rounded-lg p-5 text-white" style={{ '--tone': color }}>
+              <h3 className="text-lg font-extrabold">{title}</h3>
+              <p className="mt-2 min-h-12 text-sm leading-6 text-white/90">{copy}</p>
+              <Button variant="outline" className="mt-4 h-10 bg-white text-sm text-black hover:bg-primary">
+                SHOP NOW
+              </Button>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
-

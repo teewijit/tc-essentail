@@ -65,8 +65,12 @@ export function HomeHero({ openCatalog }) {
   }
 
   return (
-    <section className="relative aspect-[1680/944] overflow-hidden bg-white">
-      <Carousel setApi={setApi} opts={{ loop: true }} className="absolute inset-0 h-full w-full">
+    <section className="relative h-[clamp(540px,48vw,680px)] overflow-hidden">
+      <Carousel
+        setApi={setApi}
+        opts={{ loop: true }}
+        className="absolute inset-0 h-full w-full [&>div]:h-full [&>div>div]:h-full"
+      >
         <CarouselContent className="ml-0 h-full">
           {heroSlides.map((slide) => (
             <CarouselItem key={slide.id} className="h-full basis-full pl-0">
@@ -76,9 +80,13 @@ export function HomeHero({ openCatalog }) {
                 data-banner-category={slide.meta.category}
                 data-banner-fabric-type={slide.meta.fabric_type?.join(',')}
                 onClick={(event) => handleSlideClick(event, slide.filter)}
-                className="block h-full w-full"
+                className="flex h-full w-full items-center justify-center"
               >
-                <img src={slide.image} alt={slide.alt} className="h-full w-full object-cover" />
+                <img
+                  src={slide.image}
+                  alt={slide.alt}
+                  className="h-full w-auto max-w-none object-contain shadow-[0_4px_18px_rgba(0,0,0,0.08)]"
+                />
               </a>
             </CarouselItem>
           ))}

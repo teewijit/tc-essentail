@@ -13,9 +13,10 @@ export function HowToOrderSection() {
   const { t } = useLanguage()
 
   return (
-    <section className="page-shell py-5">
+    <section className="bg-[#f7f5f2] py-8">
+      <div className="page-shell">
       <h2 className="mb-5 text-2xl font-extrabold text-black">{t('home.howToOrder')}</h2>
-      <div className="rounded-xl bg-[#f7f5f2] p-6">
+      <div className="rounded-xl border border-[#e8e4de] bg-white p-6 shadow-sm">
         <div className="grid gap-4 md:grid-cols-5">
           {steps.map(([Icon, key], index) => {
             const [title, copy] = t(key)
@@ -31,7 +32,7 @@ export function HowToOrderSection() {
           )})}
         </div>
       </div>
+      </div>
     </section>
   )
 }
-
