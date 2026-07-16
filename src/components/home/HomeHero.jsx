@@ -65,7 +65,7 @@ export function HomeHero({ openCatalog }) {
   }
 
   return (
-    <section className="relative h-[clamp(540px,48vw,680px)] overflow-hidden">
+    <section className="relative aspect-[4/3] max-h-[520px] min-h-[260px] overflow-hidden bg-[#f7f5f2] sm:aspect-[3/2] md:aspect-[16/9] lg:aspect-[2.75/1] lg:max-h-[520px] lg:min-h-[360px] 2xl:aspect-[4/1] 2xl:max-h-[480px]">
       <Carousel
         setApi={setApi}
         opts={{ loop: true }}

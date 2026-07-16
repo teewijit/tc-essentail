@@ -80,6 +80,49 @@ const dictionaries = {
       originalPrice: 'ราคาเดิม',
       endsSoon: 'โปรใกล้หมด',
       viewAllDeals: 'ดูโปรทั้งหมด',
+      recommendation: {
+        title: 'แนะนำสำหรับคุณ',
+        cards: {
+          tShirtPrinting: {
+            title: 'สำหรับงานพิมพ์เสื้อยืด',
+            copy: 'เนื้อผ้านุ่ม ไม่หนัก สกรีนสวย สีติดทน',
+          },
+          oversize: {
+            title: 'สำหรับทรงโอเวอร์ไซซ์',
+            copy: 'ผ้าทิ้งตัว ใส่สบาย เหมาะกับเสื้อทรงหลวม',
+          },
+          sportswear: {
+            title: 'สำหรับชุดกีฬา',
+            copy: 'ระบายอากาศดี แห้งไว ไม่อับชื้น',
+          },
+          streetwear: {
+            title: 'สำหรับสตรีทแวร์',
+            copy: 'เนื้อผ้าหนา มีสไตล์ ใส่สบายทุกวัน',
+          },
+        },
+      },
+      handpicked: {
+        eyebrow: 'คอลเลกชันแนะนำ',
+        title: 'คัดสรรเพื่อคุณ',
+        cards: {
+          newArrivals: {
+            title: 'สินค้าเข้าใหม่',
+            copy: 'ผ้าใหม่พร้อมเลือกใช้',
+          },
+          bestSellers: {
+            title: 'สินค้าขายดี',
+            copy: 'รุ่นที่ลูกค้าเลือกซ้ำ',
+          },
+          promotionPicks: {
+            title: 'สินค้าโปรโมชัน',
+            copy: 'ตัวเลือกคุ้มค่า ใช้งานง่าย',
+          },
+          corporatePicks: {
+            title: 'ผ้าสำหรับองค์กร',
+            copy: 'ผ้าสำหรับงานทีม ยูนิฟอร์ม และองค์กร',
+          },
+        },
+      },
       steps: {
         choose: ['1. เลือกผ้า', 'ค้นหาหรือเลือกผ้าที่ต้องการ'],
         reserve: ['2. จองสินค้า 48 ชม.', 'กดจองสินค้าเพื่อยืนยันสิทธิ์'],
@@ -380,6 +423,49 @@ const dictionaries = {
       originalPrice: 'Original price',
       endsSoon: 'Ends soon',
       viewAllDeals: 'View all deals',
+      recommendation: {
+        title: 'RECOMMENDED FOR YOU',
+        cards: {
+          tShirtPrinting: {
+            title: 'For T-Shirt Printing',
+            copy: 'Soft fabric with a smooth print surface',
+          },
+          oversize: {
+            title: 'For Oversize Style',
+            copy: 'Relaxed drape for easy oversized fits',
+          },
+          sportswear: {
+            title: 'For Sportswear',
+            copy: 'Breathable, quick-dry, and comfortable',
+          },
+          streetwear: {
+            title: 'For Streetwear',
+            copy: 'Structured handfeel for everyday street looks',
+          },
+        },
+      },
+      handpicked: {
+        eyebrow: 'Explore Collections',
+        title: 'Handpicked for You',
+        cards: {
+          newArrivals: {
+            title: 'New Arrivals',
+            copy: 'Fresh fabrics, just in',
+          },
+          bestSellers: {
+            title: 'Best Sellers',
+            copy: 'Favorites of the month',
+          },
+          promotionPicks: {
+            title: 'Promotion Picks',
+            copy: 'Great-value fabrics for daily use',
+          },
+          corporatePicks: {
+            title: 'Corporate Picks',
+            copy: 'Quality picks for teams and uniforms',
+          },
+        },
+      },
       steps: {
         choose: ['1. Choose fabric', 'Search or pick the fabric you need'],
         reserve: ['2. Reserve for 48 hrs', 'Reserve to secure your fabric'],

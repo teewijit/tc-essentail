@@ -26,8 +26,8 @@ export function HowToOrderSection() {
               <span className="relative z-10 mx-auto grid size-14 place-items-center rounded-full bg-white text-[#061b3a] shadow-sm">
                 <Icon size={25} aria-hidden="true" />
               </span>
-              <h3 className="mt-3 text-sm font-extrabold text-black">{title}</h3>
-              <p className="mt-1 text-xs leading-5 text-zinc-600">{copy}</p>
+              <h3 className="mt-3 text-base font-extrabold text-black">{title}</h3>
+              <p className="mt-2 text-sm leading-5 text-zinc-600">{copy}</p>
             </div>
           )})}
         </div>
