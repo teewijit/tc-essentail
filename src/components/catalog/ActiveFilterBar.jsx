@@ -1,5 +1,6 @@
 import { Badge } from '../ui/badge'
 import { useLanguage } from '../../i18n/useLanguage'
+import { getFilterLabel } from '../../lib/filterLabels'
 
 export function ActiveFilterBar({ filters, count }) {
   const { t } = useLanguage()
@@ -16,7 +17,7 @@ export function ActiveFilterBar({ filters, count }) {
         )}
         {activeFilters.map(([key, value]) => (
           <Badge key={key} variant="outline" className="rounded bg-muted px-2 py-1 text-xs font-semibold text-black">
-            {value}
+            {getFilterLabel(key, value, t)}
           </Badge>
         ))}
       </div>

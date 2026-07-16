@@ -1,4 +1,6 @@
 import { ChevronDown, ChevronUp, Plus, RotateCcw } from 'lucide-react'
+import { useLanguage } from '../../i18n/useLanguage'
+import { filterOptionGroups } from '../../lib/filterLabels'
 import { Button } from '../ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Checkbox } from '../ui/checkbox'
@@ -6,57 +8,56 @@ import { Input } from '../ui/input'
 import { Separator } from '../ui/separator'
 import { Slider } from '../ui/slider'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
-import { useLanguage } from '../../i18n/useLanguage'
+
+const withCount = (items, counts) => items.map((item, index) => ({ ...item, count: counts[index] }))
 
 const filterGroups = [
   {
-    title: { th: 'หมวดหมู่', en: 'CATEGORY' },
+    titleKey: 'filters.category',
     filterKey: 'category',
     columns: true,
-    items: [
-      ['Dress'],
-      ['Jacket/Hoody'],
-      ['Pants'],
-      ['Polo'],
-      ['Streetwear'],
-      ['T-Shirt'],
-      ['Underwear'],
-      ['Crop/Baby-Tee'],
-      ['Shirt'],
-      ['Accessory'],
-    ],
+    items: filterOptionGroups.category,
   },
   {
     titleKey: 'filters.fabricType',
     filterKey: 'fabric_type',
     multi: true,
     columns: true,
+    items: withCount(filterOptionGroups.fabric_type, [120, 48, 36, 42, 24]),
+  },
+  {
+    titleKey: 'filters.composition',
+    columns: true,
+    items: withCount(filterOptionGroups.composition, [86, 92, 28, 34, 18]),
+  },
+  {
+    titleKey: 'filters.width',
     items: [
-      ['Single Jersey', 120, 'single_jersey'],
-      ['Interlock', 48, 'interlock'],
-      ['Rib', 36, 'rib'],
-      ['French Terry', 42, 'french_terry'],
-      ['Pique', 24, 'pique'],
+      { value: '60" (152 cm)', label: '60" (152 cm)', count: 88 },
+      { value: '72" (183 cm)', label: '72" (183 cm)', count: 94 },
+      { value: '80" (203 cm)', label: '80" (203 cm)', count: 26 },
     ],
   },
-  { titleKey: 'filters.composition', columns: true, items: [['100% Cotton', 86], ['Cotton Polyester', 92], ['100% Polyester', 28], ['Cotton Spandex', 34], ['Polyester Spandex', 18]] },
-  { titleKey: 'filters.width', items: [['60" (152 cm)', 88], ['72" (183 cm)', 94], ['80" (203 cm)', 26]] },
-  { titleKey: 'filters.stockStatus', columns: true, items: [['In Stock', 186], ['Low Stock', 32], ['Pre-Order', 18]] },
+  {
+    titleKey: 'filters.stockStatus',
+    columns: true,
+    items: withCount(filterOptionGroups.stockStatus, [186, 32, 18]),
+  },
 ]
 
 const colorSwatches = [
-  ['White', '#ffffff'],
-  ['Beige / Brown', '#cdbd9f'],
-  ['Yellow / Orange', '#ffc400'],
-  ['Orange', '#ff8a00'],
-  ['Pink', '#f06f97'],
-  ['Red', '#cc1638'],
-  ['Purple', '#a65bb4'],
-  ['Blue', '#0f4c9a'],
-  ['Teal', '#0891a6'],
-  ['Green', '#5fb336'],
-  ['Grey', '#a7a7a7'],
-  ['Black', '#000000'],
+  [filterOptionGroups.color[0], '#ffffff'],
+  [filterOptionGroups.color[1], '#cdbd9f'],
+  [filterOptionGroups.color[2], '#ffc400'],
+  [filterOptionGroups.color[3], '#ff8a00'],
+  [filterOptionGroups.color[4], '#f06f97'],
+  [filterOptionGroups.color[5], '#cc1638'],
+  [filterOptionGroups.color[6], '#a65bb4'],
+  [filterOptionGroups.color[7], '#0f4c9a'],
+  [filterOptionGroups.color[8], '#0891a6'],
+  [filterOptionGroups.color[9], '#5fb336'],
+  [filterOptionGroups.color[10], '#a7a7a7'],
+  [filterOptionGroups.color[11], '#000000'],
 ]
 
 const emptyFilters = {
@@ -89,13 +90,11 @@ export function FilterSidebar({ filters, setFilters }) {
         </CardHeader>
 
         <CardContent className="p-4 pt-0">
-          <CheckGroup group={filterGroups[0]} filters={filters} setFilters={setFilters} />
-          <CheckGroup group={filterGroups[1]} filters={filters} setFilters={setFilters} />
-          <CheckGroup group={filterGroups[2]} filters={filters} setFilters={setFilters} />
+          {filterGroups.map((group) => (
+            <CheckGroup key={group.titleKey || group.filterKey} group={group} filters={filters} setFilters={setFilters} />
+          ))}
           <RangeGroup title={t('filters.gsm')} min={100} max={300} unit="GSM" />
-          <CheckGroup group={filterGroups[3]} filters={filters} setFilters={setFilters} />
           <ColorGroup />
-          <CheckGroup group={filterGroups[4]} filters={filters} setFilters={setFilters} />
           <RangeGroup title={t('filters.priceRange')} min={50} max={300} unit={t('filters.unitBaht')} />
 
           <Button variant="dark" className="mt-4 h-12 w-full bg-[#00214d] text-white hover:bg-black">
@@ -117,18 +116,18 @@ function SectionTitle({ title }) {
 }
 
 function CheckGroup({ group, filters, setFilters }) {
-  const { language, t } = useLanguage()
-  const title = group.title?.[language] || group.title?.th || t(group.titleKey)
+  const { t } = useLanguage()
+  const title = t(group.titleKey)
 
   return (
     <FilterSection title={title}>
       <div className={`mt-3 grid gap-x-3 gap-y-2 ${group.columns ? 'grid-cols-2' : 'grid-cols-1'}`}>
-        {group.items.map(([label, count, value]) => (
+        {group.items.map((item) => (
           <CheckboxRow
-            key={label}
-            label={label}
-            value={value || label}
-            count={count}
+            key={`${group.filterKey || title}-${item.value}`}
+            label={item.labelKey ? t(item.labelKey) : item.label}
+            value={item.value}
+            count={item.count}
             filterKey={group.filterKey}
             multi={group.multi}
             filters={filters}
@@ -145,7 +144,7 @@ function CheckGroup({ group, filters, setFilters }) {
 }
 
 function CheckboxRow({ label, value, count, filterKey, multi, filters, setFilters }) {
-  const id = `filter-${label.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`
+  const id = `filter-${value.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`
   const selectedValues = String(filters?.[filterKey] || 'All')
     .split(',')
     .map((item) => item.trim())
@@ -199,17 +198,17 @@ function ColorGroup() {
   return (
     <FilterSection title={t('filters.color')}>
       <div className="mt-3 flex flex-wrap gap-2">
-        {colorSwatches.map(([name, color]) => (
-          <Tooltip key={name}>
+        {colorSwatches.map(([option, color]) => (
+          <Tooltip key={option.value}>
             <TooltipTrigger asChild>
               <button
                 type="button"
                 className="size-5 rounded-full border border-[#cfcfcf] transition hover:scale-110 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                 style={{ background: color }}
-                aria-label={name}
+                aria-label={t(option.labelKey)}
               />
             </TooltipTrigger>
-            <TooltipContent side="top">{name}</TooltipContent>
+            <TooltipContent side="top">{t(option.labelKey)}</TooltipContent>
           </Tooltip>
         ))}
         <Tooltip>

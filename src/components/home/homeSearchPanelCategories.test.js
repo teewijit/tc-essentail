@@ -1,24 +1,28 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
+import { translate } from '../../i18n/translations.js'
 import { defaultCategoryTypes, getCategoryImage, getCategoryName } from './homeSearchPanelCategories.js'
 
-test('uses Thai category name by default', () => {
-  assert.equal(getCategoryName({ name: 'เดรส', name_en: 'Dress' }, 'th'), 'เดรส')
+test('uses Thai category name from i18n', () => {
+  assert.equal(getCategoryName({ labelKey: 'filters.categories.dress' }, (key) => translate('th', key)), 'เดรส')
 })
 
-test('uses English category name when language is English', () => {
-  assert.equal(getCategoryName({ name: 'เดรส', name_en: 'Dress' }, 'en'), 'Dress')
+test('uses English category name from i18n', () => {
+  assert.equal(getCategoryName({ labelKey: 'filters.categories.dress' }, (key) => translate('en', key)), 'Dress')
 })
 
-test('falls back to Thai category name when English name is missing', () => {
-  assert.equal(getCategoryName({ name: 'เดรส' }, 'en'), 'เดรส')
+test('keeps category labels in i18n', () => {
+  for (const category of defaultCategoryTypes) {
+    assert.notEqual(translate('th', category.labelKey), category.labelKey)
+    assert.notEqual(translate('en', category.labelKey), category.labelKey)
+  }
 })
 
 test('uses apparel categories for the home category panels', () => {
   assert.deepEqual(
-    defaultCategoryTypes.map((category) => category.name_en),
-    ['Dress', 'Jacket/Hoody', 'Pants', 'Polo', 'Streetwear', 'T-Shirt', 'Underwear', 'Crop/Baby-Tee', 'Shirt', 'Accessory'],
+    defaultCategoryTypes.map((category) => translate('en', category.labelKey)),
+    ['T-Shirt', 'Polo', 'Hoode', 'Crop', 'Tank', 'Blazer', 'Shirt', 'Pants', 'Shorts', 'Dress', 'Skirt'],
   )
 })
 

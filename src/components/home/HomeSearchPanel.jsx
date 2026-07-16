@@ -15,7 +15,7 @@ const categoryIconMap = {
 }
 
 export function HomeSearchPanel({ query, setQuery, openCatalog, categoryTypes = defaultCategoryTypes }) {
-  const { language, t } = useLanguage()
+  const { t } = useLanguage()
 
   return (
     <section className="bg-[#f7f5f2] py-8">
@@ -39,7 +39,7 @@ export function HomeSearchPanel({ query, setQuery, openCatalog, categoryTypes = 
                   <span className="grid size-24 place-items-center rounded-full bg-primary text-white shadow-sm transition group-hover:-translate-y-0.5 group-hover:shadow-md md:size-28">
                     <Icon size={52} strokeWidth={1.5} className="text-white md:size-15" aria-hidden="true" />
                   </span>
-                  <span className="mt-3 leading-tight text-black">{getCategoryName(category, language)}</span>
+                  <span className="mt-3 leading-tight text-black">{getCategoryName(category, t)}</span>
                 </button>
               )
             })}
