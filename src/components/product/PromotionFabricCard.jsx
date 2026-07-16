@@ -25,10 +25,10 @@ export function PromotionFabricCard({ item, onOpen }) {
         </div>
         <CardContent className="space-y-2 p-4">
           <div>
-            <h3 className="truncate text-xl font-bold text-black">{fabric.name}</h3>
-            <p className="text-base font-semibold text-[#1a7a3a]">{fabric.code}</p>
+            <h3 className="truncate text-2xl font-bold text-black">{fabric.name}</h3>
+            <p className="text-xl font-semibold text-[#1a7a3a]">{fabric.code}</p>
           </div>
-          <ul className="space-y-0.5 text-sm text-zinc-600">
+          <ul className="space-y-0.5 text-base text-zinc-600">
             <li>
               <span className="text-zinc-500">{t('home.promoWidth')}</span>{' '}
               <span className="font-medium text-zinc-800">{fabric.width}&quot;</span>
@@ -39,15 +39,15 @@ export function PromotionFabricCard({ item, onOpen }) {
             </li>
           </ul>
           <div className="flex items-end justify-between gap-2 pt-1">
-            <span className="text-base text-zinc-400 line-through">
+            <span className="text-xl text-zinc-400 line-through">
               {formatPrice(compareAtPrice)} <br/> {t('home.promoUnit')}
             </span>
             <div className="text-right">
-              <strong className="text-xl font-bold text-[#d62828]">
+              <strong className="text-2xl font-bold text-[#d62828]">
                 {formatPrice(promoPrice)} <br/> {t('home.promoUnit')}
               </strong>
               {discountPercent > 0 && (
-                <span className="mt-0.5 block text-lg font-semibold text-[#d62828]">
+                <span className="mt-0.5 block text-xl font-semibold text-[#d62828]">
                   -{discountPercent}%
                 </span>
               )}
