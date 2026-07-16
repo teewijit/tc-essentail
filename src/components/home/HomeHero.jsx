@@ -85,7 +85,7 @@ export function HomeHero({ openCatalog }) {
                 <img
                   src={slide.image}
                   alt={slide.alt}
-                  className="h-full w-auto max-w-none object-contain shadow-[0_4px_18px_rgba(0,0,0,0.08)]"
+                  className="h-full w-full object-cover shadow-[0_4px_18px_rgba(0,0,0,0.08)] sm:w-auto sm:max-w-none sm:object-contain"
                 />
               </a>
             </CarouselItem>

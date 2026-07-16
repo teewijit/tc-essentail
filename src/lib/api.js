@@ -7,7 +7,8 @@ const matchesSearch = (fabric, search) => {
   if (!search) return true
 
   const query = search.trim().toLowerCase()
-  return [fabric.code, fabric.name, fabric.color, fabric.type, fabric.usage]
+  return [fabric.code, fabric.name, fabric.name_en, fabric.name_th, fabric.localName, fabric.color, fabric.type, fabric.usage]
+    .filter(Boolean)
     .some((value) => value.toLowerCase().includes(query))
 }
 

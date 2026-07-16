@@ -4,6 +4,7 @@ import { Card, CardContent } from '../ui/card'
 import { formatPrice } from '../../lib/format'
 import { useFavoritesStore } from '../../store/useCollections'
 import { useLanguage } from '../../i18n/useLanguage'
+import { getFabricName } from '../../lib/fabricName'
 import { FabricSwatch } from './FabricSwatch'
 
 const productDots = ['#101010', '#69553e', '#a6a6a6', '#8e2149', '#294272']
@@ -125,13 +126,14 @@ function FavoriteButton({ fabric, config }) {
 }
 
 function ProductInfo({ fabric, config }) {
+  const { language } = useLanguage()
   const specText = config.showName ? `${fabric.gsm} GSM` : `${fabric.width}"`
   const trailingSpecText = config.showName ? `${fabric.width}"` : `${fabric.gsm} GSM`
 
   return (
     <div>
       <h3 className={config.titleClass}>{fabric.code}</h3>
-      {config.showName && <p className="mt-1 truncate text-sm text-zinc-600">{fabric.name}</p>}
+      {config.showName && <p className="mt-1 truncate text-sm text-zinc-600">{getFabricName(fabric, language)}</p>}
       <p className={config.specClass}>
         {specText}
         <span className={config.showName ? 'mx-2 text-sm text-zinc-300' : 'mx-1 text-sm text-zinc-300'}>•</span>

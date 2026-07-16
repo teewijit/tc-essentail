@@ -4,10 +4,11 @@ import { Button } from '../ui/Button'
 import { Separator } from '../ui/separator'
 import { useLanguage } from '../../i18n/useLanguage'
 import { formatPrice } from '../../lib/format'
+import { getFabricName } from '../../lib/fabricName'
 
 /** ส่วนหัวสินค้า — ประเภท, ปุ่ม fav/bookmark/share, ชื่อ และคำอธิบาย */
 export function DetailSummary({ fabric, saved, bookmarked, onFavorite, onBookmark, onShare }) {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
 
   return (
     <section>
@@ -58,7 +59,7 @@ export function DetailSummary({ fabric, saved, bookmarked, onFavorite, onBookmar
       <div className="grid items-center gap-4 sm:grid-cols-[minmax(0,1fr)_auto]">
         <div className="flex flex-col">
           <h1 className="text-4xl font-extrabold leading-tight text-[#061b3a]">{fabric.code}</h1>
-          <p className="text-xl font-semibold text-[#061b3a]">{fabric.name}</p>
+          <p className="text-xl font-semibold text-[#061b3a]">{getFabricName(fabric, language)}</p>
         </div>
         <div className="sm:text-right">
           <p className="text-sm font-semibold text-zinc-500">{t('detail.priceKg')}</p>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Heart, MapPin, Phone, ShoppingCart, Trash2, UserRound } from 'lucide-react'
 import { formatPrice } from '../../lib/format'
+import { getFabricName } from '../../lib/fabricName'
 import { useAuthStore } from '../../store/useAuthStore'
 import { selectCartCount, selectCartTotal, useCartStore } from '../../store/useCartStore'
 import { useFavoritesStore } from '../../store/useCollections'
@@ -145,7 +146,7 @@ function CountBadge({ count }) {
 const PREVIEW_LIMIT = 3
 
 function WishlistButton({ setView }) {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
   const favorites = useFavoritesStore((state) => state.items)
   const [open, setOpen] = useState(false)
   const containerRef = useOutsideClose(open, () => setOpen(false))
@@ -185,7 +186,7 @@ function WishlistButton({ setView }) {
                   <FabricSwatch fabric={fabric} className="h-10 w-12 shrink-0 rounded-md" />
                   <div className="min-w-0">
                     <p className="truncate font-bold text-[#061b3a]">{fabric.code}</p>
-                    <p className="truncate text-zinc-500">{fabric.name}</p>
+                    <p className="truncate text-zinc-500">{getFabricName(fabric, language)}</p>
                   </div>
                 </div>
               ))}
@@ -209,7 +210,7 @@ function WishlistButton({ setView }) {
 /* ---------- Mini cart popover ---------- */
 
 function CartButton({ setView }) {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
   const items = useCartStore((state) => state.items)
   const removeItem = useCartStore((state) => state.removeItem)
   const count = useCartStore(selectCartCount)
@@ -254,7 +255,7 @@ function CartButton({ setView }) {
                     <FabricSwatch fabric={fabric} className="h-11 w-13 shrink-0 rounded-md" />
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-bold text-[#061b3a]">{fabric.code}</p>
-                      <p className="truncate text-zinc-500">{fabric.name}</p>
+                      <p className="truncate text-zinc-500">{getFabricName(fabric, language)}</p>
                       <p className="text-xs text-zinc-500">
                         {qty} {fabric.unit} x {formatPrice(fabric.price)}
                       </p>

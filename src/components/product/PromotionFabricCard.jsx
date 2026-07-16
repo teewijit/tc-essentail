@@ -1,11 +1,12 @@
 import { Card, CardContent } from '../ui/card'
 import { formatPrice } from '../../lib/format'
+import { getFabricName } from '../../lib/fabricName'
 import { useLanguage } from '../../i18n/useLanguage'
 import { FabricSwatch } from './FabricSwatch'
 
 export function PromotionFabricCard({ item, onOpen }) {
   const { fabric, promoPrice, compareAtPrice, discountPercent } = item
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
 
   return (
     <Card className="product-card group gap-0 overflow-hidden p-0">
@@ -25,7 +26,7 @@ export function PromotionFabricCard({ item, onOpen }) {
         </div>
         <CardContent className="space-y-2 p-4">
           <div>
-            <h3 className="truncate text-2xl font-bold text-black">{fabric.name}</h3>
+            <h3 className="truncate text-2xl font-bold text-black">{getFabricName(fabric, language)}</h3>
             <p className="text-xl font-semibold text-[#1a7a3a]">{fabric.code}</p>
           </div>
           <ul className="space-y-0.5 text-base text-zinc-600">

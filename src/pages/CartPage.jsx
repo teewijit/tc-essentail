@@ -22,6 +22,7 @@ import { Textarea } from '../components/ui/textarea'
 import { FabricSwatch } from '../components/product/FabricSwatch'
 import { useLanguage } from '../i18n/useLanguage'
 import { formatPrice } from '../lib/format'
+import { getFabricName } from '../lib/fabricName'
 import { selectDefaultAddress, useAddressStore } from '../store/useAddressStore'
 import { useAuthStore } from '../store/useAuthStore'
 import { selectCartTotal, useCartStore } from '../store/useCartStore'
@@ -97,7 +98,7 @@ const getCheckoutLabels = (t) => ({
 })
 
 export function CartPage({ goCatalog, goLogin, openDetailById }) {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
   const labels = useMemo(() => getCheckoutLabels(t), [t])
   const items = useCartStore((state) => state.items)
   const setQty = useCartStore((state) => state.setQty)
@@ -223,6 +224,7 @@ export function CartPage({ goCatalog, goLogin, openDetailById }) {
           <aside className="space-y-4 lg:sticky lg:top-5 lg:self-start">
             <CartItemsPanel
               labels={labels}
+              language={language}
               items={items}
               cartCount={cartCount}
               setQty={setQty}
@@ -375,7 +377,7 @@ function CheckoutDetails({ labels, user, form, updateForm, shippingMethod, setSh
   )
 }
 
-function CartItemsPanel({ labels, items, cartCount, setQty, removeItem, clear, goCatalog, openDetailById, t }) {
+function CartItemsPanel({ labels, language, items, cartCount, setQty, removeItem, clear, goCatalog, openDetailById, t }) {
   return (
     <Card className="rounded-xl border-[#d7dee9] bg-white p-0 shadow-md">
       <CardHeader className="border-b border-border px-4 py-3">
@@ -396,7 +398,7 @@ function CartItemsPanel({ labels, items, cartCount, setQty, removeItem, clear, g
               <div className="min-w-0">
                 <button type="button" onClick={() => openDetailById(fabric.id)} className="text-left">
                   <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-700">{labels.inStock}</span>
-                  <h3 className="mt-1 text-base font-extrabold leading-snug text-[#061b3a]">{fabric.name}</h3>
+                  <h3 className="mt-1 text-base font-extrabold leading-snug text-[#061b3a]">{getFabricName(fabric, language)}</h3>
                 </button>
                 <p className="mt-1 text-sm text-zinc-600">
                   {labels.code}: {fabric.code} • {labels.color}: {fabric.color}
