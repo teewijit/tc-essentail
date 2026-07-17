@@ -65,7 +65,7 @@ export function HomeHero({ openCatalog }) {
   }
 
   return (
-    <section className="relative aspect-[4/3] max-h-[520px] min-h-[260px] overflow-hidden bg-[#f7f5f2] sm:aspect-[3/2] md:aspect-[16/9] lg:aspect-[2.75/1] lg:max-h-[520px] lg:min-h-[360px] 2xl:aspect-[4/1] 2xl:max-h-[480px]">
+    <section className="relative h-[clamp(280px,48vw,560px)] w-full overflow-hidden bg-[#f7f5f2] md:h-[clamp(360px,38vw,560px)] xl:h-[clamp(420px,34vw,580px)]">
       <Carousel
         setApi={setApi}
         opts={{ loop: true }}
@@ -80,12 +80,12 @@ export function HomeHero({ openCatalog }) {
                 data-banner-category={slide.meta.category}
                 data-banner-fabric-type={slide.meta.fabric_type?.join(',')}
                 onClick={(event) => handleSlideClick(event, slide.filter)}
-                className="flex h-full w-full items-center justify-center"
+                className="block h-full w-full"
               >
                 <img
                   src={slide.image}
                   alt={slide.alt}
-                  className="h-full w-full object-cover shadow-[0_4px_18px_rgba(0,0,0,0.08)] sm:w-auto sm:max-w-none sm:object-contain"
+                  className="h-full w-full object-cover object-center shadow-[0_4px_18px_rgba(0,0,0,0.08)]"
                 />
               </a>
             </CarouselItem>
