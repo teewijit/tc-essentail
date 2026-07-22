@@ -7,17 +7,15 @@ import {
   CarouselItem,
 } from '../ui/carousel'
 import bannerPolo from '../../assets/banner/banner_polo.jpg'
-import bannerPromo from '../../assets/banner/banner_promo.jpg'
-import bannerTshirt from '../../assets/banner/banner_t-shirt.jpg'
 
 const heroSlides = [
-  {
-    id: 'banner-promo',
-    image: bannerPromo,
-    alt: 'Tee Culture promotional fabric banner',
-    filter: { fabric_type: 'single_jersey,french_terry' },
-    meta: { fabric_type: ['single_jersey', 'french_terry'] },
-  },
+  // {
+  //   id: 'banner-promo',
+  //   image: bannerPromo,
+  //   alt: 'Tee Culture promotional fabric banner',
+  //   filter: { fabric_type: 'single_jersey,french_terry' },
+  //   meta: { fabric_type: ['single_jersey', 'french_terry'] },
+  // },
   {
     id: 'banner-polo',
     image: bannerPolo,
@@ -25,13 +23,13 @@ const heroSlides = [
     filter: { category: 'Polo' },
     meta: { category: 'polo' },
   },
-  {
-    id: 'banner-t-shirt',
-    image: bannerTshirt,
-    alt: 'T-shirt fabric category banner',
-    filter: { category: 'T-Shirt' },
-    meta: { category: 't-shirt' },
-  },
+  // {
+  //   id: 'banner-t-shirt',
+  //   image: bannerTshirt,
+  //   alt: 'T-shirt fabric category banner',
+  //   filter: { category: 'T-Shirt' },
+  //   meta: { category: 't-shirt' },
+  // },
 ]
 
 export function HomeHero({ openCatalog }) {
@@ -65,27 +63,27 @@ export function HomeHero({ openCatalog }) {
   }
 
   return (
-    <section className="relative h-[clamp(280px,48vw,560px)] w-full overflow-hidden bg-[#f7f5f2] md:h-[clamp(360px,38vw,560px)] xl:h-[clamp(420px,34vw,580px)]">
+    <section className="relative w-full overflow-hidden bg-[#f7f5f2]">
       <Carousel
         setApi={setApi}
         opts={{ loop: true }}
-        className="absolute inset-0 h-full w-full [&>div]:h-full [&>div>div]:h-full"
+        className="relative w-full"
       >
-        <CarouselContent className="ml-0 h-full">
+        <CarouselContent className="ml-0">
           {heroSlides.map((slide) => (
-            <CarouselItem key={slide.id} className="h-full basis-full pl-0">
+            <CarouselItem key={slide.id} className="basis-full pl-0">
               <a
                 href={`#/catalog?${new URLSearchParams(slide.filter).toString()}`}
                 aria-label={`Open ${slide.alt}`}
                 data-banner-category={slide.meta.category}
                 data-banner-fabric-type={slide.meta.fabric_type?.join(',')}
                 onClick={(event) => handleSlideClick(event, slide.filter)}
-                className="block h-full w-full"
+                className="block w-full"
               >
                 <img
                   src={slide.image}
                   alt={slide.alt}
-                  className="h-full w-full object-cover object-center shadow-[0_4px_18px_rgba(0,0,0,0.08)]"
+                  className="block h-auto w-full shadow-[0_4px_18px_rgba(0,0,0,0.08)]"
                 />
               </a>
             </CarouselItem>
