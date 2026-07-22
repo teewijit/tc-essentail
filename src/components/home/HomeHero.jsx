@@ -6,16 +6,19 @@ import {
   CarouselContent,
   CarouselItem,
 } from '../ui/carousel'
+import bannerPromo from '../../assets/banner/banner_promo.jpg'
 import bannerPolo from '../../assets/banner/banner_polo.jpg'
+import bannerTshirt from '../../assets/banner/banner_t-shirt.jpg'
+
 
 const heroSlides = [
-  // {
-  //   id: 'banner-promo',
-  //   image: bannerPromo,
-  //   alt: 'Tee Culture promotional fabric banner',
-  //   filter: { fabric_type: 'single_jersey,french_terry' },
-  //   meta: { fabric_type: ['single_jersey', 'french_terry'] },
-  // },
+  {
+    id: 'banner-promo',
+    image: bannerPromo,
+    alt: 'Tee Culture promotional fabric banner',
+    filter: { fabric_type: 'single_jersey,french_terry' },
+    meta: { fabric_type: ['single_jersey', 'french_terry'] },
+  },
   {
     id: 'banner-polo',
     image: bannerPolo,
@@ -23,13 +26,13 @@ const heroSlides = [
     filter: { category: 'Polo' },
     meta: { category: 'polo' },
   },
-  // {
-  //   id: 'banner-t-shirt',
-  //   image: bannerTshirt,
-  //   alt: 'T-shirt fabric category banner',
-  //   filter: { category: 'T-Shirt' },
-  //   meta: { category: 't-shirt' },
-  // },
+  {
+    id: 'banner-t-shirt',
+    image: bannerTshirt,
+    alt: 'T-shirt fabric category banner',
+    filter: { category: 'T-Shirt' },
+    meta: { category: 't-shirt' },
+  },
 ]
 
 export function HomeHero({ openCatalog }) {
